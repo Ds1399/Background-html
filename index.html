@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Particle Animation</title>
+</head>
+<body>
+    <button id="toggleButton">Toggle Particles Animation</button>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <script>
+        let isParticlesAnimationActive = true;
+
+        function toggleParticlesAnimation() {
+            isParticlesAnimationActive = !isParticlesAnimationActive;
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const toggleButton = document.getElementById('toggleButton');
+            toggleButton.setAttribute( 'aria-label', 'Click this button to pause or resume the particles animation.' )
+            toggleButton.onclick = toggleParticlesAnimation;
+        });
+
+        function animateParticles(time) {
+            if (!isParticlesAnimationActive) return;
+            particles.forEach((particle, index) => {
+                const movedParticle = moveParticle(particle, canvas, time);
+                particles[index] = movedParticle;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawParticle(movedParticle, canvas, ctx);
+            }) 
+            requestAnimationFrame(animateParticles);
+        }
+    </script>
+</body>
+</html>
